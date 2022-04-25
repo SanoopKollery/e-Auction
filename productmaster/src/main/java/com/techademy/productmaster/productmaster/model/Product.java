@@ -32,5 +32,6 @@ public class Product{
 	private double startingPrice;
 	@Future(message = "Bid end date should be future")
 	private Date bidEndDate;
+	private ProductCategory category;
 	
 }

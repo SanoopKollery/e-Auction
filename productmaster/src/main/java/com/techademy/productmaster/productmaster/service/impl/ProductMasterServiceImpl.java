@@ -25,7 +25,9 @@ public class ProductMasterServiceImpl implements ProductMasterService{
 				.cataegory(product.getCataegory())
 				.startingPrice(product.getStartingPrice())
 				.description(product.getDescription())
+				.category(product.getCategory())
 				.build();
+		masterRepository.save(prod);
 				
 		return new ResponseEntity<>(prod,HttpStatus.OK);
 	}

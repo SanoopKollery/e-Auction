@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.techademy.productmaster.productmaster.model.Product;
 
 @Repository
-public interface ProductMasterRepository extends JpaRepository<Product,Integer> {
+public interface ProductMasterRepository extends JpaRepository<Product,String> {
 
 }

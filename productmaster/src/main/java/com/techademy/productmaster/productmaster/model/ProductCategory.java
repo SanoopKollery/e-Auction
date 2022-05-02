@@ -9,7 +9,8 @@ public enum ProductCategory {
 	   private final String displayName;
 
 	   ProductCategory(String displayName) {
-	      this.displayName = displayName;
+
+	   	this.displayName = displayName;
 	   }
 
 	   public String getDisplayName() {

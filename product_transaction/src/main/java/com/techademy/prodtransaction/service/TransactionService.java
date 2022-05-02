@@ -1,26 +1,46 @@
 package com.techademy.prodtransaction.service;
 
 
+import com.techademy.prodtransaction.exception.BidDateExpiredException;
+import com.techademy.prodtransaction.exception.ProductNotFound;
 import com.techademy.prodtransaction.exception.TransactionNotFoundException;
+import com.techademy.prodtransaction.facade.ProductMasterProxy;
 import com.techademy.prodtransaction.model.Transaction;
+import com.techademy.prodtransaction.proxy.Product;
 import com.techademy.prodtransaction.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 public class TransactionService {
 
-    @Autowired
     private TransactionRepository transactionRepository;
 
+    private ProductMasterProxy proxy;
 
-    public ResponseEntity<?> saveTransaction(Transaction trxn) {
-        //Get product details and check bid date over --TO DO
+    public TransactionService(TransactionRepository transactionRepository, ProductMasterProxy proxy) {
+        this.transactionRepository=transactionRepository;
+        this.proxy=proxy;
+    }
+
+    public ResponseEntity<?> saveTransaction(Transaction trxn) throws BidDateExpiredException, ProductNotFound {
+
+        Product product= null;
+        try {
+             product=proxy.getProduct(trxn.getProductId( )).getBody( );
+        }
+        catch (Exception e) {
+            throw new ProductNotFound("Product not found !!");
+        }
+        if (product.getBidEndDate().before(new Timestamp(System.currentTimeMillis())))
+        {
+            throw new BidDateExpiredException("Bid date expired !!");
+        }
 
         Transaction transaction = Transaction.builder()
                 .firstName(trxn.getFirstName())
@@ -53,4 +73,6 @@ public class TransactionService {
     public List<Transaction> getTransactions(int producctID) {
         return  transactionRepository.findAllByProductId(producctID);
     }
+
+
 }

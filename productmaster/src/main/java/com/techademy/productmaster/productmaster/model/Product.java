@@ -1,6 +1,8 @@
 package com.techademy.productmaster.productmaster.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,10 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,18 +27,17 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Product{
 
-	@NotNull
-	@Min(value = 5)
-	@Max(value = 30)
-	private String productName;
+
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String productId;
-	
+	private Long productId;
+	@NotNull
+	@Size(min = 5,max=30)
+	private String productName;
 	private String shortDescription;
 	private String description;
-	private String cataegory;
-	private double startingPrice;
-	private String bidEndDate;
+	private String category;
+	private BigDecimal startingPrice;
+	private Timestamp bidEndDate;
 }

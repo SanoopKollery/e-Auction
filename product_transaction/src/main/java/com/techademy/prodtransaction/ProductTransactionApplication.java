@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients("com.techademy.prodtransaction")
+@EnableFeignClients
 public class ProductTransactionApplication {
 
 	public static void main(String[] args) {

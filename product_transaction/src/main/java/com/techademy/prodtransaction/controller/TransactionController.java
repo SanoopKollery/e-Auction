@@ -1,6 +1,8 @@
 package com.techademy.prodtransaction.controller;
 
 
+import com.techademy.prodtransaction.exception.BidDateExpiredException;
+import com.techademy.prodtransaction.exception.ProductNotFound;
 import com.techademy.prodtransaction.exception.TransactionNotFoundException;
 import com.techademy.prodtransaction.model.Transaction;
 import com.techademy.prodtransaction.service.TransactionService;
@@ -23,8 +25,7 @@ public class TransactionController {
     @Autowired
     private TransactionService trxService;
     @PostMapping("/place-bid")
-    public ResponseEntity<?> saveTransaction(@RequestBody @Valid  Transaction transaction)
-    {
+    public ResponseEntity<?> saveTransaction(@RequestBody @Valid  Transaction transaction) throws BidDateExpiredException, ProductNotFound {
         return  trxService.saveTransaction(transaction);
     }
 

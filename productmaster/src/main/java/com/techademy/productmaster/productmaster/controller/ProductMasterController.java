@@ -2,13 +2,9 @@ package com.techademy.productmaster.productmaster.controller;
 
 import javax.validation.Valid;
 
+import com.techademy.productmaster.productmaster.exception.ProductNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.techademy.productmaster.productmaster.exception.GenericException;
 import com.techademy.productmaster.productmaster.model.Product;
@@ -26,15 +22,19 @@ public class ProductMasterController {
 	}
 	
 	@PostMapping("/add-product")
-	public ResponseEntity addProduct(@RequestBody @Valid Product product){
+	public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) throws GenericException {
 		
 		return masterService.saveProduct(product);
 	}
 	
 	@DeleteMapping("/delete/{productId}")
-	public ResponseEntity deleteProduct(@PathVariable String productId) throws GenericException{
-		
+	public ResponseEntity deleteProduct(@PathVariable long productId) throws GenericException{
 		return masterService.deleteProduct(productId);
+	}
+
+	@GetMapping("/get-product/{productId}")
+	public ResponseEntity getProduct(@PathVariable long productId) throws GenericException, ProductNotFoundException {
+		return masterService.getProduct(productId);
 	}
 	
 

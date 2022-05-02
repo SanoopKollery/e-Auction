@@ -1,5 +1,7 @@
 package com.techademy.prodtransaction.advise;
 
+import com.techademy.prodtransaction.exception.BidDateExpiredException;
+import com.techademy.prodtransaction.exception.ProductNotFound;
 import com.techademy.prodtransaction.exception.TransactionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +29,24 @@ public class TransactionExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TransactionNotFoundException.class)
     public Map<String,String> handleTransactionNotFound(TransactionNotFoundException ex)
+    {
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage",ex.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BidDateExpiredException.class)
+    public Map<String,String> handleBidDateExpiredException(BidDateExpiredException ex)
+    {
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage",ex.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProductNotFound.class)
+    public Map<String,String> handleProductNotFoundException(ProductNotFound ex)
     {
         Map<String,String> errorMap = new HashMap<>();
         errorMap.put("errorMessage",ex.getMessage());

@@ -3,6 +3,8 @@ package com.techademy.productmaster.productmaster.controller;
 import javax.validation.Valid;
 
 import com.techademy.productmaster.productmaster.exception.ProductNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,10 @@ import com.techademy.productmaster.productmaster.service.ProductMasterService;
 @RestController
 @RequestMapping("/e-auction/api/v1/seller")
 public class ProductMasterController {
+
+	private static final Logger logger = LoggerFactory.getLogger(ProductMasterController.class);
+
+
 	
 	
 	private ProductMasterService masterService;
@@ -23,6 +29,9 @@ public class ProductMasterController {
 	
 	@PostMapping("/add-product")
 	public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) throws GenericException {
+		logger.info("somnath-info");
+		logger.debug("somnath--debug");
+		logger.error("somnath---error");
 		
 		return masterService.saveProduct(product);
 	}
